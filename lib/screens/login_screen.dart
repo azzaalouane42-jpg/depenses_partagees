@@ -71,6 +71,23 @@ class _LoginScreenState extends State<LoginScreen>{
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(15),),
               ),
             ),
+              const SizedBox(height: 30),
+              ElevatedButton(onPressed: (){
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:
+                Text('La connexion sera bientot disponible'),
+                ),);
+              },
+              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF9B59B6),
+              foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),),
+              ),
+                child: const Text('Se connecter',style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),),
+              ),
+
             ],
           ),
           ),
