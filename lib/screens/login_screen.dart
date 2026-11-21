@@ -49,6 +49,15 @@ class _LoginScreenState extends State<LoginScreen>{
               TextFormField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
+                validator:(value){
+                if(value ==null || value.isEmpty){
+                  return 'Veuillez saisir votre email';
+                }
+                if(!value.contains('@') || !value.contains('.')){
+                  return 'Email invalide';
+                }
+                return null;
+               },
                 decoration: InputDecoration(labelText: 'Email',
                 prefixIcon: const Icon(Icons.email_outlined),
                   filled: true,
@@ -63,28 +72,43 @@ class _LoginScreenState extends State<LoginScreen>{
             TextFormField(
               controller: passwordController,
             obscureText: cachermotdepasse,
+              validator: (value){
+                if(value ==null || value.isEmpty){
+                  return 'Veuillez saisir votre mot de passe';
+                }
+                if(value.length < 6){
+                  return 'Le mot de passe doit contenir au moins 6 caractéres';
+                }
+                return null;
+              },
+
               decoration: InputDecoration(
-                labelText: 'Mot de passe',
-                prefixIcon: const Icon(Icons.lock_outline),
-                suffixIcon: IconButton(icon: Icon(
-                    cachermotdepasse
-                        ? Icons.visibility_off
-                        : Icons.visibility,
+              labelText: 'Mot de passe',
+              prefixIcon: const Icon(Icons.lock_outline),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  cachermotdepasse
+                      ? Icons.visibility_off
+                      : Icons.visibility,
                 ),
-                  onPressed: () {
-                    setState(() {
-                      cachermotdepasse = !cachermotdepasse;
-                    });
-                  },
-                ),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15),
-                ),),
+                onPressed: () {
+                  setState(() {
+                    cachermotdepasse = !cachermotdepasse;
+                  });
+                },
               ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+          ),
               const SizedBox(height: 30),
               ElevatedButton(onPressed: (){
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:
-                Text('La connexion sera bientot disponible'),
-                ),);
+                  if(_formKey.currentState!.validate()){
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content:Text('la connexion sera bientot disponible'),
+                    ),);
+                  }
               },
               style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF9B59B6),
               foregroundColor: Colors.white,
