@@ -62,15 +62,24 @@ class _LoginScreenState extends State<LoginScreen>{
               //mot de passe
             TextFormField(
               controller: passwordController,
-            obscureText: true,
+            obscureText: cachermotdepasse,
               decoration: InputDecoration(
                 labelText: 'Mot de passe',
                 prefixIcon: const Icon(Icons.lock_outline),
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15),),
+                suffixIcon: IconButton(icon: Icon(
+                    cachermotdepasse
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                ),
+                  onPressed: () {
+                    setState(() {
+                      cachermotdepasse = !cachermotdepasse;
+                    });
+                  },
+                ),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15),
+                ),),
               ),
-            ),
               const SizedBox(height: 30),
               ElevatedButton(onPressed: (){
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:
