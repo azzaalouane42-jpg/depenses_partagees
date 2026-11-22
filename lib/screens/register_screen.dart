@@ -11,6 +11,8 @@ class RegisterScreen extends StatefulWidget {
 }
 //cette classe contient l'état et le fonctionnement de l'écran d'inscription
 class _RegisterScreenState extends State<RegisterScreen>{
+  // clé pour contrôler et valider le formulaire
+  final _formKey = GlobalKey<FormState>();
 
   //cette méthode construit l'interface graphique de la page
   @override
@@ -26,8 +28,10 @@ class _RegisterScreenState extends State<RegisterScreen>{
 
         //permet de faire défiler la page si le contenu est trop grand
         child: SingleChildScrollView(
-          child: Column(
-            //Placer les élements de la page verticalement
+          // formulaire pour valider les informations saisies
+          child: Form(
+            key: _formKey,
+            child: Column(
             //contenu de la page d'inscription
             children: [
               //ajouter un espace en haut de la page
@@ -181,7 +185,7 @@ class _RegisterScreenState extends State<RegisterScreen>{
           ),
         ),
 
-      ),),
+      ),),),
     );
   }
 }
