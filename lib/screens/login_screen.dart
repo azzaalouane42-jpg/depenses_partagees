@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+//importer l'écran d"inscription
+import 'register_screen.dart';
 
 // Cette classe représente l'écran de connexion de l'application
 // StatefulWidget permet de modifier l'écran pendant son utilisation
@@ -196,6 +198,27 @@ class _LoginScreenState extends State<LoginScreen>{
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),),
+              ),
+              TextButton(
+                onPressed: (){
+                  //ouvrir la page d'inscription
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const RegisterScreen();
+                      },
+                    ),
+                  );
+                },
+                //texte affichée dans le bouton
+                child: const Text('Créer un compte',
+                style: TextStyle(
+                  color: Color(0xFF663399),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+                ),
               ),
 
             ],
