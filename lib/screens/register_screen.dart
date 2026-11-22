@@ -71,6 +71,13 @@ class _RegisterScreenState extends State<RegisterScreen>{
 
           //champ pour saisir le nom de l'utilisateur
               TextFormField(
+                //vérifier que le nom est saisi
+                validator:(value){
+                  if(value==null || value.isEmpty){
+                    return 'Veuillez saisir votre nom';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                   labelText: "Nom",
                   //icone affichée au debut du champ
@@ -184,11 +191,14 @@ class _RegisterScreenState extends State<RegisterScreen>{
               ElevatedButton(
                 //action exécutée lorsque l'utilisateur clique sur le bouton
                 onPressed:(){
-                  //afficher un message aprés le clic
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  //vérifier si tous les champs sont valides
+                  if(_formKey.currentState!.validate()){
+                    //afficher un message aprés la validation
+                    ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Inscription bientot disponible'),
                       ),
-                  );
+                    );
+                  }
               },
                 //définir le style du bouton
                 style: ElevatedButton.styleFrom(
