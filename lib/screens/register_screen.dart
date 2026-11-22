@@ -152,6 +152,16 @@ class _RegisterScreenState extends State<RegisterScreen>{
               TextFormField(
                 //cacher le mot de passe
                 obscureText: true,
+                //vérifier que le mot de passe est valide
+                validator: (value){
+                  if(value==null || value.isEmpty){
+                    return 'Veuillez saisir votre mot de passe';
+                  }
+                  if(value.length<6){
+                    return "Le mot de passe doit contenir au moins 6 caractéres";
+                  }
+                  return null;
+                },
 
                 //définir l'apparence du champ
                 decoration: InputDecoration(labelText: 'Mot de passe',
