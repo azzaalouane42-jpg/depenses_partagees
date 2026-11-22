@@ -13,6 +13,8 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen>{
   // clé pour contrôler et valider le formulaire
   final _formKey = GlobalKey<FormState>();
+  //controller la visibilité du mot de passe
+  bool _obscurePassword = true;
 
   //cette méthode construit l'interface graphique de la page
   @override
@@ -158,7 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen>{
               //champ pour saisir le mot de passe
               TextFormField(
                 //cacher le mot de passe
-                obscureText: true,
+                obscureText:_obscurePassword,
                 //vérifier que le mot de passe est valide
                 validator: (value){
                   if(value==null || value.isEmpty){
@@ -174,7 +176,21 @@ class _RegisterScreenState extends State<RegisterScreen>{
                 decoration: InputDecoration(labelText: 'Mot de passe',
 
                   //icone affichée au début du champ
-                  prefixIcon: const Icon(Icons.lock_outline),
+                  prefixIcon: const Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    //changer la visibilité du mot de passe
+                      onPressed:(){
+                        setState(() {
+                          _obscurePassword = !_obscurePassword;
+                        });
+                      },
+                    //afficher l'icone selon l'état du mot de passe
+                    icon: Icon(
+                      _obscurePassword
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                    ),
+                  ),
 
                   //définir la couleur de fond du champ
                   filled: true,
