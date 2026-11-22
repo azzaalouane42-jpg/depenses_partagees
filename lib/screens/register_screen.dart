@@ -124,6 +124,28 @@ class _RegisterScreenState extends State<RegisterScreen>{
 
           // Ajouter un espace après le champ email
           const SizedBox(height: 20),
+
+              //champ pour saisir le mot de passe
+              TextFormField(
+                //cacher le mot de passe
+                obscureText: true,
+
+                //définir l'apparence du champ
+                decoration: InputDecoration(labelText: 'Mot de passe',
+
+                  //icone affichée au début du champ
+                  prefixIcon: const Icon(Icons.lock_outline),
+
+                  //définir la couleur de fond du champ
+                  filled: true,
+                  fillColor: Colors.white,
+
+                  //définir les coins arrondis du champ
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(15),),
+                ),
+              ),
+              //ajouter un espace après le champ mot de passe
+              const SizedBox(height: 20),
             ],
           ),
         ),
