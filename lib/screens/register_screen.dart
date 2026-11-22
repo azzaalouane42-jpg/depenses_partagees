@@ -87,6 +87,13 @@ class _RegisterScreenState extends State<RegisterScreen>{
               const SizedBox(height: 20),
               // Champ pour saisir le prénom de l'utilisateur
               TextFormField(
+                //verifier que le prénom est saisi
+                validator: (value){
+                  if(value==null || value.isEmpty){
+                    return "Veuillez saisir votre prénom";
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(
                   labelText: 'Prénom',
                   // Icône affichée au début du champ
@@ -108,6 +115,18 @@ class _RegisterScreenState extends State<RegisterScreen>{
           TextFormField(
             // Afficher le clavier adapté à la saisie d'un email.
             keyboardType: TextInputType.emailAddress,
+            // vérifier que l'email est valide
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Veuillez saisir votre email';
+              }
+
+              if (!value.contains('@') || !value.contains('.')) {
+                return 'Veuillez saisir un email valide';
+              }
+
+              return null;
+            },
 
             decoration: InputDecoration(
               labelText: 'Email',
