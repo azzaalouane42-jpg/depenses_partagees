@@ -146,6 +146,37 @@ class _RegisterScreenState extends State<RegisterScreen>{
               ),
               //ajouter un espace après le champ mot de passe
               const SizedBox(height: 20),
+
+              //bouton pour créer un nouveau compte
+              ElevatedButton(
+                //action exécutée lorsque l'utilisateur clique sur le bouton
+                onPressed:(){
+                  //afficher un message aprés le clic
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Inscription bientot disponible'),
+                      ),
+                  );
+              },
+                //définir le style du bouton
+                style: ElevatedButton.styleFrom(
+                  //couleur de fond du bouton
+                  backgroundColor: const Color(0xFF9B59B6),
+
+                  //couleur du texte
+                  foregroundColor: Colors.white,
+
+                  //ajouter un espace a l'intérieur du bouton
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+
+                  //définir les coins arrondis
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                //texte affichée dans le bouton
+                child: const Text('Créer mon compte',
+                style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,),
+                ),
+                ),
             ],
           ),
         ),
