@@ -75,6 +75,22 @@ class _CreateGroupScreenState extends State<CreateGroupScreen>{
               ),
             ),
             const SizedBox(height: 20),
+
+            //bouton pour créer le groupe
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: (){
+                  //action a exécuter lors de la création du groupe
+                },
+              icon: const Icon(Icons.group_add),
+                label:const Text("Créer le groupe"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF9B59B6),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.all(16),
+                ),),
+              ),
           ],
         ),
 
