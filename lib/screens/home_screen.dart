@@ -16,12 +16,17 @@ class HomeScreen extends StatelessWidget{
         foregroundColor: Colors.white,
       ),
       //contenu principale de la page
-      body: const Center(
-        child: Text("Bienvenue !",
-        style: TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //Message de bienvenue
+            const Text('Bienvenue !👋',
+              style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,),
+            ),
+            const SizedBox(height: 20),
+          ],
         ),
       ),
     );
