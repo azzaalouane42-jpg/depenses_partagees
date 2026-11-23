@@ -1,6 +1,8 @@
+import 'package:depenses_partagees/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 //importer l'écran d"inscription
 import 'register_screen.dart';
+
 
 // Cette classe représente l'écran de connexion de l'application
 // StatefulWidget permet de modifier l'écran pendant son utilisation
@@ -174,9 +176,8 @@ class _LoginScreenState extends State<LoginScreen>{
                 onPressed: (){
                   // Vérifier tous les champs du Form
                   if(_formKey.currentState!.validate()){
-                    // Si les champs sont valides, afficher un message
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content:Text('la connexion sera bientot disponible'),
+                    // Si les champs sont valides, ouvrir la page d'accueil
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen(),
                     ),);
                   }
               },
