@@ -46,6 +46,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen>{
                   fillColor: Colors.white,
               ),
             ),
+            const SizedBox(height: 20),
             //champ pour décrire le groupe
             TextFormField(
               maxLines: 3,
@@ -59,7 +60,21 @@ class _CreateGroupScreenState extends State<CreateGroupScreen>{
               ),
               ),
             const SizedBox(height: 20),
-
+            //champ pour saisir le budget du groupe
+            TextFormField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: "Budget du groupe",
+                hintText: "Exemple : 500 DT",
+                prefixIcon: const Icon(Icons.account_balance_wallet),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                filled: true,
+                fillColor: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 20),
           ],
         ),
 
