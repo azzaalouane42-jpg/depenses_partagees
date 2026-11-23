@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 //cette classe représente l'écran d'inscription
 //StatefulWidget permet de modifier l'écran selon les actions de l'utilisateur
@@ -12,10 +13,46 @@ class RegisterScreen extends StatefulWidget {
 }
 //cette classe contient l'état et le fonctionnement de l'écran d'inscription
 class _RegisterScreenState extends State<RegisterScreen>{
-  // clé pour contrôler et valider le formulaire
+  //clé pour contrôler et valider le formulaire
   final _formKey = GlobalKey<FormState>();
   //controller la visibilité du mot de passe
   bool _obscurePassword = true;
+  //controllers pour récupérer les informations de l'utilisateur
+  final nomController = TextEditingController();
+  final prenomController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  //fonction pour créer un nouveau compte avec firebase
+  Future<void> creerCompte() async {
+    try {
+      //créer un compte avec l'email et le mot de passe
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      //si la création réussit, ouvrir la page d'accueil
+      if (!mounted) return;
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+      );
+
+    } on FirebaseAuthException catch (e) {
+      // Afficher le message en cas d'erreur.
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.message ?? 'Erreur de création du compte'),
+        ),
+      );
+    }
+  }
 
   //cette méthode construit l'interface graphique de la page
   @override
