@@ -23,10 +23,46 @@ class _CreateGroupScreenState extends State<CreateGroupScreen>{
         foregroundColor: Colors.white,
       ),
       //contenu principale
-      body: const Center(
-        child: Text('Nouveau groupe',
-        style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //titre de la page
+            const Text('Créer votre groupe',
+          style: TextStyle(
+            fontSize: 24,fontWeight: FontWeight.bold,),
+          ),
+            const SizedBox(height: 20),
+
+            //champ pour saisir le nom du groupe
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: "Nom du groupe",
+                hintText: 'Exemple: Voyage, Colocation...',
+                prefixIcon: const Icon(Icons.group),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15),),
+                  filled: true,
+                  fillColor: Colors.white,
+              ),
+            ),
+            //champ pour décrire le groupe
+            TextFormField(
+              maxLines: 3,
+              decoration: InputDecoration(
+                labelText: "Description",
+                hintText: 'Décrire votre groupe..',
+                prefixIcon: const Icon(Icons.description),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15),),
+                filled: true,
+                fillColor: Colors.white,
+              ),
+              ),
+            const SizedBox(height: 20),
+
+          ],
         ),
+
       ),
     );
   }
