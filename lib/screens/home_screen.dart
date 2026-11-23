@@ -47,6 +47,27 @@ class HomeScreen extends StatelessWidget{
               ],
               ),
             ),
+            //carte des dépenses du mois
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(20),),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //titre de la carte
+                  Text('Dépenses du mois',
+                  style: TextStyle(fontSize: 16,color: Colors.grey,),
+                  ),
+                  SizedBox(height: 10),
+
+                  //montant des dépenses
+                  Text('0.000 DT',
+                  style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,color: Color(0xFF9B59B6),),),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
