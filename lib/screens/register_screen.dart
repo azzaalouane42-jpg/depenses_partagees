@@ -244,14 +244,12 @@ class _RegisterScreenState extends State<RegisterScreen>{
               //bouton pour créer un nouveau compte
               ElevatedButton(
                 //action exécutée lorsque l'utilisateur clique sur le bouton
-                onPressed:(){
+                onPressed:() async {
                   //vérifier si tous les champs sont valides
                   if(_formKey.currentState!.validate()){
 
-                    //naviguer vers la page d'accueil
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                      return const HomeScreen();
-                    },),);
+                    //créer un compte avec firebase
+                    await creerCompte();
                   }
               },
                 //définir le style du bouton
