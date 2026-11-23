@@ -26,6 +26,27 @@ class HomeScreen extends StatelessWidget{
               style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,),
             ),
             const SizedBox(height: 20),
+
+            //carte du solde
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(color: const Color(0xFF9B59B6),borderRadius: BorderRadius.circular(20),),
+              child: const Column(crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //titre de la carte
+                Text('Mon solde',
+                style: TextStyle(color: Colors.white,fontSize: 16,),
+                ),
+                SizedBox(height: 10),
+
+                //montant du solde
+                Text('0.000 DT',
+                style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.bold,),
+                ),
+              ],
+              ),
+            ),
           ],
         ),
       ),
