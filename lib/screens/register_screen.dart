@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
 
 //cette classe représente l'écran d'inscription
 //StatefulWidget permet de modifier l'écran selon les actions de l'utilisateur
@@ -209,11 +210,11 @@ class _RegisterScreenState extends State<RegisterScreen>{
                 onPressed:(){
                   //vérifier si tous les champs sont valides
                   if(_formKey.currentState!.validate()){
-                    //afficher un message aprés la validation
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Inscription bientot disponible'),
-                      ),
-                    );
+
+                    //naviguer vers la page d'accueil
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                      return const HomeScreen();
+                    },),);
                   }
               },
                 //définir le style du bouton
