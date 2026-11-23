@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'screens/login_screen.dart';
 
-void main() {
+//fonction principale de l'application
+Future<void> main() async {
+
+  //initialiser flutter avant firebase
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //Initialiser firebase avec les configurations android
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  //lancer l'application
   runApp(const MyApp());
 }
 
