@@ -68,6 +68,24 @@ class HomeScreen extends StatelessWidget{
               ),
             ),
             const SizedBox(height: 20),
+
+             ElevatedButton.icon(
+              //action du bouton
+              onPressed:(){},
+
+              //icone du bouton
+              icon:const Icon(Icons.group_add),
+              
+              //texte du boutob
+              label: const Text('Créer un groupe'),
+              //style du bouton
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF9B59B6),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),),
+              ),
+            ),
           ],
         ),
       ),
