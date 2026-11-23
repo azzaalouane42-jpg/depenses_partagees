@@ -1,8 +1,8 @@
 import 'package:depenses_partagees/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 //importer l'écran d"inscription
 import 'register_screen.dart';
-
 
 // Cette classe représente l'écran de connexion de l'application
 // StatefulWidget permet de modifier l'écran pendant son utilisation
@@ -26,6 +26,34 @@ class _LoginScreenState extends State<LoginScreen>{
   // Variable booléenne pour cacher ou afficher le mot de passe
   // true = mot de passe caché ; false = mot de passe visible
   bool cachermotdepasse = true;
+  //fonction pour connecter l'utilisateur avec firebase
+  Future<void> connecter() async {
+    try {
+      //vérifier l'email et le mot de passe avec firebase
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      //si la connexion réussit, ouvrir la page d'accueil
+      if (!mounted) return;
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+      );
+
+    } on FirebaseAuthException catch (e) {
+      //afficher un message en cas d'erreur
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.message ?? 'Erreur de connexion')),
+      );
+    }
+  }
 
   // Cette méthode libère les ressources utilisées par les controllers
   // lorsque l'écran est supprimé
@@ -163,22 +191,21 @@ class _LoginScreenState extends State<LoginScreen>{
                   });
                 },
               ),
-                // Définir une bordure arrondie pour le champ
+                //définir une bordure arrondie pour le champ
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
           ),
-              // Ajouter un espace avant le bouton de connexion
+              //ajouter un espace avant le bouton de connexion
               const SizedBox(height: 30),
               ElevatedButton(
-                // Action exécutée lorsque l'utilisateur clique sur le bouton
-                onPressed: (){
-                  // Vérifier tous les champs du Form
+                //action exécutée lorsque l'utilisateur clique sur le bouton
+                onPressed: () async {
+                  //vérifier tous les champs du form
                   if(_formKey.currentState!.validate()){
-                    // Si les champs sont valides, ouvrir la page d'accueil
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen(),
-                    ),);
+                    //connecter l'utilisateur avec firebase
+                    await connecter();
                   }
               },
                 // Définir le style du bouton
