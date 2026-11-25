@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'create_group_screen.dart';
+import 'groups_screen.dart';
 
 //cette classe représente la page d'accueil
 class HomeScreen extends StatefulWidget  {
@@ -20,6 +21,17 @@ class _HomeScreenState extends State<HomeScreen>{
         selectedItemColor: const Color(0xFF9B59B6),
         unselectedItemColor: Colors.grey,
         currentIndex: 0,
+        //navigation entre les pages
+        onTap: (index) {
+          if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const GroupsScreen(),
+              ),
+            );
+          }
+        },
 
         items: const[
           BottomNavigationBarItem(icon:Icon(Icons.home),label: 'Accueil',),
