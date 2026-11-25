@@ -10,6 +10,10 @@ class CreateGroupScreen extends StatefulWidget {
   }
 }
 class _CreateGroupScreenState extends State<CreateGroupScreen>{
+  //controllers pour récupérer les informations saisies
+  final TextEditingController nomController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController budgetController = TextEditingController();
 
   @override
   Widget build(BuildContext context){
