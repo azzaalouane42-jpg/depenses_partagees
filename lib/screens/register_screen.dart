@@ -43,7 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen>{
       );
 
     } on FirebaseAuthException catch (e) {
-      // Afficher le message en cas d'erreur.
+      //afficher le message en cas d'erreur
       if (!mounted) return;
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -51,8 +51,16 @@ class _RegisterScreenState extends State<RegisterScreen>{
           content: Text(e.message ?? 'Erreur de création du compte'),
         ),
       );
+    }catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erreur technique : $e'),
+        ),
+      );
     }
-  }
+    }
 
   //cette méthode construit l'interface graphique de la page
   @override
@@ -160,6 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen>{
 
           // Champ pour saisir l'adresse email de l'utilisateur.
           TextFormField(
+            controller: emailController,
             // Afficher le clavier adapté à la saisie d'un email.
             keyboardType: TextInputType.emailAddress,
             // vérifier que l'email est valide
@@ -197,6 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen>{
 
               //champ pour saisir le mot de passe
               TextFormField(
+                controller: passwordController,
                 //cacher le mot de passe
                 obscureText:_obscurePassword,
                 //vérifier que le mot de passe est valide
