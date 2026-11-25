@@ -2,13 +2,33 @@ import 'package:flutter/material.dart';
 import 'create_group_screen.dart';
 
 //cette classe représente la page d'accueil
-class HomeScreen extends StatelessWidget{
+class HomeScreen extends StatefulWidget  {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+class _HomeScreenState extends State<HomeScreen>{
 
   @override
   Widget build(BuildContext context){
     return Scaffold(
       backgroundColor: const Color(0xFFF8F5FC),
+      //barre de navigation en bas
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: const Color(0xFF9B59B6),
+        unselectedItemColor: Colors.grey,
+        currentIndex: 0,
+
+        items: const[
+          BottomNavigationBarItem(icon:Icon(Icons.home),label: 'Accueil',),
+          BottomNavigationBarItem(icon:Icon(Icons.group),label: 'Groupes',),
+          BottomNavigationBarItem(icon:Icon(Icons.wallet),label: 'Dépenses',),
+          BottomNavigationBarItem(icon:Icon(Icons.bar_chart),label: 'Statistiques',),
+          BottomNavigationBarItem(icon:Icon(Icons.person),label: 'Profil',),
+        ],
+      ),
 
       //barre supérieur de la page
       appBar: AppBar(
@@ -72,7 +92,14 @@ class HomeScreen extends StatelessWidget{
 
              ElevatedButton.icon(
               //action du bouton
-              onPressed:(){},
+              onPressed:(){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CreateGroupScreen(),
+                  ),
+                );
+              },
 
               //icone du bouton
               icon:const Icon(Icons.group_add),
