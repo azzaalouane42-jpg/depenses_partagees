@@ -1,5 +1,5 @@
 import 'package:depenses_partagees/screens/home_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 //importer l'écran d"inscription
 import 'register_screen.dart';
