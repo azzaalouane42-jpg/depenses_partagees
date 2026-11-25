@@ -1,4 +1,6 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 //cette classe représente l'écran de création d'un groupe
 class CreateGroupScreen extends StatefulWidget {
@@ -14,6 +16,67 @@ class _CreateGroupScreenState extends State<CreateGroupScreen>{
   final TextEditingController nomController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController budgetController = TextEditingController();
+
+  //fonction pour enregistrer un groupe dans firebase
+  Future<void> enregistrerGroupe() async {
+
+    //récupérer les informations saisies
+    String nom = nomController.text.trim();
+    String description = descriptionController.text.trim();
+    String budget = budgetController.text.trim();
+
+    //vérifier le nom du groupe
+    if (nom.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Veuillez saisir le nom du groupe"),
+        ),
+      );
+      return;
+    }
+
+    // récupérer l'utilisateur connecté
+    User? utilisateur = FirebaseAuth.instance.currentUser;
+
+    if (utilisateur == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Veuillez vous connecter"),
+        ),
+      );
+      return;
+    }
+
+    try {
+      //enregistrer le groupe dans Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(utilisateur.uid)
+          .collection('groups')
+          .add({
+        'nom': nom,
+        'description': description,
+        'budget': budget,
+        'dateCreation': FieldValue.serverTimestamp(),
+      });
+
+      //retourner à la page précédente
+      if (!mounted) return;
+
+      Navigator.pop(context, {
+        'nom': nom,
+        'description': description,
+        'budget': budget,
+      });
+
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Erreur lors de la création : $e"),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context){
@@ -41,6 +104,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen>{
 
             //champ pour saisir le nom du groupe
             TextFormField(
+              controller: nomController,
               decoration: InputDecoration(
                 labelText: "Nom du groupe",
                 hintText: 'Exemple: Voyage, Colocation...',
@@ -53,6 +117,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen>{
             const SizedBox(height: 20),
             //champ pour décrire le groupe
             TextFormField(
+              controller: descriptionController,
               maxLines: 3,
               decoration: InputDecoration(
                 labelText: "Description",
@@ -66,6 +131,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen>{
             const SizedBox(height: 20),
             //champ pour saisir le budget du groupe
             TextFormField(
+              controller: budgetController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: "Budget du groupe",
@@ -84,8 +150,29 @@ class _CreateGroupScreenState extends State<CreateGroupScreen>{
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                onPressed: (){
-                  //action a exécuter lors de la création du groupe
+                onPressed: () {
+                  enregistrerGroupe();
+                  // Récupérer les informations saisies
+                  String nom = nomController.text.trim();
+                  String description = descriptionController.text.trim();
+                  String budget = budgetController.text.trim();
+
+                  // Vérifier que le nom du groupe n'est pas vide
+                  if (nom.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Veuillez saisir le nom du groupe"),
+                      ),
+                    );
+                    return;
+                  }
+
+                  // Retourner les informations vers la page précédente
+                  Navigator.pop(context, {
+                    'nom': nom,
+                    'description': description,
+                    'budget': budget,
+                  });
                 },
               icon: const Icon(Icons.group_add),
                 label:const Text("Créer le groupe"),
