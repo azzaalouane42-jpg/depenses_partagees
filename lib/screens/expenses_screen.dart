@@ -211,8 +211,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
         child: const Icon(
           Icons.add,
           color: Colors.white,
-        ),
-      ),
+        ),),
     );
   }
 }
