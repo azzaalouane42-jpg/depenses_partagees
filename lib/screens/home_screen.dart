@@ -1,6 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 import 'create_group_screen.dart';
 import 'groups_screen.dart';
+import 'expenses_screen.dart';
+
 
 //cette classe représente la page d'accueil
 class HomeScreen extends StatefulWidget  {
@@ -21,8 +23,9 @@ class _HomeScreenState extends State<HomeScreen>{
         selectedItemColor: const Color(0xFF9B59B6),
         unselectedItemColor: Colors.grey,
         currentIndex: 0,
-        //navigation entre les pages
+
         onTap: (index) {
+          //ouvrir la page des groupes
           if (index == 1) {
             Navigator.push(
               context,
@@ -31,8 +34,16 @@ class _HomeScreenState extends State<HomeScreen>{
               ),
             );
           }
+          //ouvrir la page des dépenses
+          if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ExpensesScreen(),
+              ),
+            );
+          }
         },
-
         items: const[
           BottomNavigationBarItem(icon:Icon(Icons.home),label: 'Accueil',),
           BottomNavigationBarItem(icon:Icon(Icons.group),label: 'Groupes',),
@@ -41,7 +52,6 @@ class _HomeScreenState extends State<HomeScreen>{
           BottomNavigationBarItem(icon:Icon(Icons.person),label: 'Profil',),
         ],
       ),
-
       //barre supérieur de la page
       appBar: AppBar(
         title: const Text('Dépenses Partagées'),
