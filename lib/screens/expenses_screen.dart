@@ -55,12 +55,11 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
       builder: (context) {
         return AlertDialog(
           title: const Text('Ajouter une dépense'),
-
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
 
-              // Champ du nom de la dépense
+              //champ du nom de la dépense
               TextField(
                 controller: nomController,
                 decoration: const InputDecoration(
@@ -70,14 +69,13 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
               ),
               const SizedBox(height: 15),
 
-              // Choisir le groupe de la dépense
+              //choisir le groupe de la dépense
               StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                 stream: groupesStream,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
                   }
-
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                     return const Text(
                       'Aucun groupe disponible',
@@ -90,7 +88,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                       labelText: 'Choisir un groupe',
                       border: OutlineInputBorder(),
                     ),
-                    value: groupeSelectionneId,
+                    initialValue: groupeSelectionneId,
                     items: groupes.map((groupe) {
                       return DropdownMenuItem<String>(
                         value: groupe.id,
@@ -100,7 +98,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                     onChanged: (valeur) {
                       setState(() {
                         groupeSelectionneId = valeur;
-
                         final groupe = groupes.firstWhere(
                               (g) => g.id == valeur,
                         );
@@ -141,11 +138,18 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                       content: Text('Veuillez remplir tous les champs'),
                     ),
                   );
+                  return;}
+                //vérifier si un groupe est sélectionné
+                if (groupeSelectionneId == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Veuillez choisir un groupe'),
+                    ),
+                  );
                   return;
                 }
                 //vérifier le montant
                 double? valeur = double.tryParse(montant.replaceAll(',', '.'));
-
                 if (valeur == null || valeur <= 0) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
@@ -162,6 +166,8 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                     .add({
                   'nom': nom,
                   'montant': valeur,
+                  'groupeId': groupeSelectionneId,
+                  'groupeNom': groupeSelectionneNom,
                   'dateCreation': FieldValue.serverTimestamp(),
                 });
                 //fermer le formulaire
