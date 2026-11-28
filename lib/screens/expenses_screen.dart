@@ -11,10 +11,27 @@ class ExpensesScreen extends StatefulWidget {
 }
 class _ExpensesScreenState extends State<ExpensesScreen> {
 
-//contrôleur du nom
+//controleur du nom
   final TextEditingController nomController = TextEditingController();
-//contrôleur du montant
+//controleur du montant
   final TextEditingController montantController = TextEditingController();
+  // Groupe sélectionné pour la dépense
+  String? groupeSelectionneId;
+  String? groupeSelectionneNom;
+
+//récupérer les groupes depuis firebase
+  Stream<QuerySnapshot<Map<String, dynamic>>> get groupesStream {
+    User? utilisateur = FirebaseAuth.instance.currentUser;
+
+    if (utilisateur == null) {
+      return const Stream.empty();
+    }
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(utilisateur.uid)
+        .collection('groups')
+        .snapshots();
+  }
   //récupérer les dépenses depuis Firebase
   Stream<QuerySnapshot<Map<String, dynamic>>> get depensesStream {
     User? utilisateur = FirebaseAuth.instance.currentUser;
@@ -52,6 +69,47 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                 ),
               ),
               const SizedBox(height: 15),
+
+              // Choisir le groupe de la dépense
+              StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: groupesStream,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+
+                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    return const Text(
+                      'Aucun groupe disponible',
+                    );
+                  }
+                  final groupes = snapshot.data!.docs;
+
+                  return DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(
+                      labelText: 'Choisir un groupe',
+                      border: OutlineInputBorder(),
+                    ),
+                    value: groupeSelectionneId,
+                    items: groupes.map((groupe) {
+                      return DropdownMenuItem<String>(
+                        value: groupe.id,
+                        child: Text(groupe['nom']),
+                      );
+                    }).toList(),
+                    onChanged: (valeur) {
+                      setState(() {
+                        groupeSelectionneId = valeur;
+
+                        final groupe = groupes.firstWhere(
+                              (g) => g.id == valeur,
+                        );
+                        groupeSelectionneNom = groupe['nom'];
+                      });
+                    },
+                  );
+                },
+              ),
               //champ du montant
               TextField(
                 controller: montantController,
